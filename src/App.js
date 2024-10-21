@@ -5,29 +5,32 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import { supabase } from './supabase/client';
+import { PerfumeContextProvider } from './context/PerfumeContext';
 
 function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() =>{
+  useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
-      if (!session){
+      if (!session) {
         navigate('/login')
       } else {
         navigate('/')
       }
     })
-  },[navigate])
+  }, [])
 
 
   return (
     <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <PerfumeContextProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PerfumeContextProvider>
     </div>
   );
 }
