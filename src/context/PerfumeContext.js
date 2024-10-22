@@ -27,7 +27,7 @@ export const PerfumeContextProvider = ({ children }) => {
         setLoading(false)
     }
 
-    const createPerfume = async (perfumeName, perfumeDescription, perfumePath, perfumeVersion, perfumeSize, perfumePrice, perfumeImage) => {
+    const createPerfume = async (perfumeName, perfumeDescription, perfumePath, perfumeVersion, perfumeSize, perfumePrice, perfumeImage,perfumeImageTwo,perfumeImageThree,perfumeImageFour) => {
 
         setAdding(true)
         try {
@@ -39,6 +39,9 @@ export const PerfumeContextProvider = ({ children }) => {
                 size: perfumeSize,
                 price: perfumePrice,
                 image: perfumeImage,
+                imagetwo: perfumeImageTwo,
+                imagethree: perfumeImageThree,
+                imagefour: perfumeImageFour
             })
 
             if (error) throw error
@@ -64,7 +67,7 @@ export const PerfumeContextProvider = ({ children }) => {
     }
 
     const updatePerfume = async (updatedPerfume) => {
-        const { id, name, description, path, version, size, price, image } = updatedPerfume;
+        const { id, name, description, path, version, size, price, image, imagetwo, imagethree, imagefour } = updatedPerfume;
         console.log('Updating perfume with ID:', id);  // Para ver si el ID es correcto
         console.log('Updated perfume data:', updatedPerfume);
         const { data, error } = await supabase
@@ -76,7 +79,10 @@ export const PerfumeContextProvider = ({ children }) => {
                 version,
                 size,
                 price,
-                image
+                image,
+                imagetwo,
+                imagethree,
+                imagefour
             })
             .eq('id', id);
         if (error) {

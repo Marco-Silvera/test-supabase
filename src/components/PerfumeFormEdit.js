@@ -9,7 +9,10 @@ function PerfumeFormEdit() {
         version: '',
         size: '',
         price: '',
-        image: ''
+        image: '',
+        imagetwo: '',
+        imagethree: '',
+        imagefour: ''
     };
 
     const { selectedPerfume, updatePerfume } = usePerfumes();
@@ -25,7 +28,10 @@ function PerfumeFormEdit() {
                 version: selectedPerfume.version || '',
                 size: selectedPerfume.size || '',
                 price: selectedPerfume.price || '',
-                image: selectedPerfume.image || ''
+                image: selectedPerfume.image || '',
+                imagetwo: selectedPerfume.imagetwo || '',
+                imagethree: selectedPerfume.imagethree || '',
+                imagefour: selectedPerfume.imagefour || ''
             });
         }
     }, [selectedPerfume]);
@@ -122,6 +128,36 @@ function PerfumeFormEdit() {
                     name="image"
                     id="image"
                     value={formData.image}
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="image">Image</label>
+                <input
+                    type="text"
+                    name="imagetwo"
+                    id="imagetwo"
+                    value={formData.imagetwo}
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="image">Image</label>
+                <input
+                    type="text"
+                    name="imagethree"
+                    id="imagethree"
+                    value={formData.imagethree}
+                    onChange={handleChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="image">Image</label>
+                <input
+                    type="text"
+                    name="imagefour"
+                    id="imagefour"
+                    value={formData.imagefour}
                     onChange={handleChange}
                 />
             </div>

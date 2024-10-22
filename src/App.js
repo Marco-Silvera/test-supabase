@@ -1,33 +1,37 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Login from './pages/Login'
-import Home from './pages/Home'
+import HomePage from './pages/HomePage'
 import NotFound from './pages/NotFound'
 import { supabase } from './supabase/client';
 import { PerfumeContextProvider } from './context/PerfumeContext';
+import Dashboard from './pages/Dashboard';
+import Register from './pages/Register';
 
 function App() {
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate('/login')
-      } else {
-        navigate('/')
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session && window.location.pathname === '/dashboard') {
+        navigate('/login');
       }
-    })
-  }, [])
+    };
 
+    checkSession();
+    
+  }, [navigate]);
 
   return (
-    <div className="App">
+    <div className='App'>
       <PerfumeContextProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PerfumeContextProvider>
