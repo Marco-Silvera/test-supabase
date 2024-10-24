@@ -1,80 +1,123 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePerfumes } from "../context/PerfumeContext";
-import PerfumeCardDashboard from "./PerfumeCardDashboard";
+import PerfumeRowDashboard from "./PerfumeRowDashboard";
 
 function PerfumeTable() {
 
     const { perfumes, getPerfumes, loading } = usePerfumes()
 
-    console.log(perfumes)
+    const [filter, setFilter] = useState("added"); // Estado para el filtro y orden
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredPerfumes, setFilteredPerfumes] = useState([]);
+
     useEffect(() => {
         getPerfumes()
     }, [])
 
+
+    useEffect(() => {
+        handleFilter(); // Ejecutar el filtro cada vez que cambie la opción seleccionada o los perfumes
+    }, [filter, searchTerm, perfumes]);
+
+    function handleFilter() {
+        let sortedPerfumes = [...perfumes]; // Crear una copia de los perfumes
+
+
+        if (searchTerm) {
+            sortedPerfumes = sortedPerfumes.filter((perfume) =>
+                perfume.name.toLowerCase().includes(searchTerm.toLowerCase()) // Comparar nombres en minúsculas
+            );
+        }
+
+        switch (filter) {
+            case "nombre":
+                sortedPerfumes.sort((a, b) => a.name.localeCompare(b.name)); // Ordenar por nombre
+                break;
+            case "marca":
+                sortedPerfumes.sort((a, b) => a.brand.localeCompare(b.brand)); // Ordenar por marca
+                break;
+            case "hombre":
+                sortedPerfumes = sortedPerfumes.filter((perfume) => perfume.gender.toLowerCase() === "hombre"); // Filtrar perfumes de hombre
+                break;
+            case "mujer":
+                sortedPerfumes = sortedPerfumes.filter((perfume) => perfume.gender.toLowerCase() === "mujer"); // Filtrar perfumes de mujer
+                break;
+            case "tester":
+                sortedPerfumes = sortedPerfumes.filter((perfume) => perfume.version.toLowerCase() === "tester"); // Filtrar perfumes tester
+                break;
+            case "sellado":
+                sortedPerfumes = sortedPerfumes.filter((perfume) => perfume.version.toLowerCase() === "sellado"); // Filtrar perfumes sellados
+                break;
+            default:
+                break; // Dejar el orden original si es "added"
+        }
+
+        setFilteredPerfumes(sortedPerfumes);
+    }
+
     function renderPerfumes() {
         if (loading) {
-            return <p>Loading...</p>
+            return <p>Loading...</p>;
         } else if (perfumes.length === 0) {
-            return <p>No hay perfumes</p>
+            return <p>No hay perfumes</p>;
         } else {
             return (
                 <section>
+                    {/* Select para ordenar y filtrar */}
+                    <div className="flex justify-between gap-5 flex-col sm:flex-row sm:items-center mb-4">
+                        <div className="relative flex items-center">
+                            {/* SVG de filtro */}
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" className="w-5 h-5 left-2 absolute text-gray-500">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5.5 4.75h13a1 1 0 01.852 1.518L12.723 12.5a1 1 0 00-.223.626V18.75a.75.75 0 01-1.5 0v-5.624a1 1 0 00-.223-.626L4.648 6.268A1 1 0 015.5 4.75z" />
+                            </svg>
 
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-                            <div>
-                                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 " type="button">
-                                    <svg className="w-3 h-3 text-gray-500  me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-                                    </svg>
-                                    Last 30 days
-                                    <svg className="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                                    </svg>
-                                </button>
-                                <div id="dropdownRadio" className="z-10 hidden w-48 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style={{
-                                    position: 'absolute',
-                                    inset: 'auto auto 0px 0px',
-                                    margin: '0px',
-                                    transform: 'translate3d(522.5px, 3847.5px, 0px)'
-                                }}>
-                                    <ul className="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
-                                        <li>
-                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="filter-radio-example-1" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500  focus:ring-2" />
-                                                <label for="filter-radio-example-1" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last day</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input checked="" id="filter-radio-example-2" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
-                                                <label for="filter-radio-example-2" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last 7 days</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="filter-radio-example-3" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
-                                                <label for="filter-radio-example-3" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last 30 days</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="filter-radio-example-4" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
-                                                <label for="filter-radio-example-4" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last month</label>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="flex items-center p-2 rounded hover:bg-gray-100">
-                                                <input id="filter-radio-example-5" type="radio" value="" name="filter-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2" />
-                                                <label for="filter-radio-example-5" className="w-full ms-2 text-sm font-medium text-gray-900 rounded">Last year</label>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            {/* Select para filtrar */}
+                            <select
+                                value={filter}
+                                onChange={(e) => setFilter(e.target.value)}
+                                className="p-2 pl-8 border rounded-md text-sm lg:text-base"
+                            >
+                                <option value="por defecto">Orden por defecto</option>
+                                <option value="nombre">Ordenar por nombre</option>
+                                <option value="marca">Ordenar por marca</option>
+                                <option value="hombre">Perfumes de hombre</option>
+                                <option value="mujer">Perfumes de mujer</option>
+                                <option value="tester">Solo tester</option>
+                                <option value="sellado">Solo sellados</option>
+                            </select>
                         </div>
+
+                        <div className="relative flex items-center">
+                            {/* SVG de lupa */}
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="absolute left-2 w-5 h-5 text-gray-500"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3.5a7.5 7.5 0 016.15 13.15z"
+                                />
+                            </svg>
+
+                            {/* Input de búsqueda */}
+                            <input
+                                type="text"
+                                className="p-2 pl-8 border rounded-md text-sm lg:text-base"
+                                placeholder="Buscar perfume..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-200">
                                 <tr className="text-center">
                                     <th scope="col" className="px-2 py-3">
                                         Nombre
@@ -112,11 +155,19 @@ function PerfumeTable() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    perfumes.map(perfume => (
-                                        <PerfumeCardDashboard perfume={perfume} />
+                                {/* Renderizar perfumes filtrados */}
+                                {filteredPerfumes.length > 0 ? (
+                                    filteredPerfumes.map((perfume) => (
+                                        <PerfumeRowDashboard key={perfume.id} perfume={perfume} />
                                     ))
-                                }
+                                ) : (
+                                    // Mostrar mensaje dentro de un <tr> cuando no hay coincidencias
+                                    <tr>
+                                        <td colSpan="11" className="text-center py-4">
+                                            No se encontraron coincidencias
+                                        </td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -127,23 +178,12 @@ function PerfumeTable() {
         }
     }
 
-
     return <div>
         {renderPerfumes()}
     </div>
 }
 
 export default PerfumeTable;
-
-
-
-
-
-
-
-
-
-
 
 
 

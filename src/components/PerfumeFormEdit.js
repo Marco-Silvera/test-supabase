@@ -81,8 +81,7 @@ function PerfumeFormEdit() {
     return (
         <section className="w-full border-b border-black pb-5">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center">
-                <div className="flex flex-col gap-10">
-
+                <div className="flex flex-col gap-5 sm:gap-10">
                     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-5 justify-center">
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-5 text-sm sm:text-base">
                             <label className="flex flex-col gap-2 items-start w-full font-medium">Nombre
@@ -110,7 +109,7 @@ function PerfumeFormEdit() {
                             </label>
                             <div className="flex w-full gap-2 sm:gap-5 order-1 lg:order-0">
 
-                            <label className="flex flex-col gap-2 items-start w-full  font-medium"> Versión
+                                <label className="flex flex-col gap-2 items-start w-full  font-medium"> Versión
                                     <select
                                         className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         name="version"
@@ -219,7 +218,7 @@ function PerfumeFormEdit() {
                                     name="concentration"
                                     value={formData.concentration}
                                     onChange={handleChange}
-                                    placeholder="Versión de perfume"
+                                    placeholder="Concentración de perfume"
                                     className="border p-2 rounded-lg w-full outline-none focus:border-green-600 border-gray-200 font-normal"
                                     required
                                 />
@@ -231,7 +230,7 @@ function PerfumeFormEdit() {
                                         name="size"
                                         value={formData.size}
                                         onChange={handleChange}
-                                        placeholder="Tamaño de perfume"
+                                        placeholder="Tamaño"
                                         className="border p-2 rounded-lg w-full outline-none focus:border-green-600 border-gray-200 font-normal"
                                         min="0" max="500" required
                                     />
@@ -242,7 +241,7 @@ function PerfumeFormEdit() {
                                         name="price"
                                         value={formData.price}
                                         onChange={handleChange}
-                                        placeholder="Precio de perfume"
+                                        placeholder="Precio"
                                         className="border p-2 rounded-lg w-full outline-none focus:border-green-600 border-gray-200 font-normal"
                                         min="0" max="3000" required
                                     />
@@ -280,7 +279,7 @@ function PerfumeFormEdit() {
                                 {formData.image && (
                                     <img
                                         src={formData.image}
-                                        alt="Imagen del perfume"
+                                        alt={`Imagen principal de ${formData.name}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -300,7 +299,7 @@ function PerfumeFormEdit() {
                                 {formData.imagetwo && (
                                     <img
                                         src={formData.imagetwo}
-                                        alt="Imagen del perfume"
+                                        alt={`Segunda imagen de ${formData.name}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -320,7 +319,7 @@ function PerfumeFormEdit() {
                                 {formData.imagethree && (
                                     <img
                                         src={formData.imagethree}
-                                        alt="Imagen del perfume"
+                                        alt={`Tercera imagen de ${formData.name}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -341,7 +340,7 @@ function PerfumeFormEdit() {
                                 {formData.imagefour && (
                                     <img
                                         src={formData.imagefour}
-                                        alt="Imagen del perfume"
+                                        alt={`Cuarta imagen de ${formData.name}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}

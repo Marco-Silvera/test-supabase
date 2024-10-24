@@ -52,11 +52,10 @@ function PerfumeForm() {
     return (
         <section className="w-full border-b border-black pb-5">
             <form onSubmit={handleSubmit} className="flex flex-col gap-5 justify-center">
-                <div className="flex flex-col gap-10">
-
+                <div className="flex flex-col gap-5 sm:gap-10">
                     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-2 sm:gap-5 justify-center">
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-5 sm:gap-x-5 text-sm sm:text-base">
-                            <label className="flex flex-col gap-2 items-start w-full font-medium"> Nombre
+                            <label className="flex flex-col gap-2 items-start w-full font-medium">Nombre
                                 <input
                                     className="border p-2 rounded-lg w-full outline-none focus:border-green-600 border-gray-200 font-normal"
                                     type="text"
@@ -68,7 +67,7 @@ function PerfumeForm() {
                                 />
                             </label>
 
-                            <label className="flex flex-col gap-2 items-start w-full font-medium"> Path
+                            <label className="flex flex-col gap-2 items-start w-full font-medium">Path
                                 <input
                                     className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                     type="text"
@@ -80,39 +79,39 @@ function PerfumeForm() {
                                 />
                             </label>
                             <div className="flex w-full gap-2 sm:gap-5 order-1 lg:order-0">
-                                <label className="flex flex-col gap-2 items-start w-full  font-medium"> Versión
+                                <label className="flex flex-col gap-2 items-start w-full  font-medium">Versión
                                     <select
                                         className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         name="perfumeversion"
                                         onChange={(e) => setPerfumeVersion(e.target.value)} value={perfumeVersion} required
                                     >
-                                        <option value="" disabled>Selecciona la versión</option>
+                                        <option value="" disabled>Versión</option>
                                         <option value="Tester">Tester</option>
                                         <option value="Sellado">Sellado</option>
                                     </select>
                                 </label>
 
-                                <label className="flex flex-col gap-2 items-start w-full  font-medium"> Género
+                                <label className="flex flex-col gap-2 items-start w-full  font-medium">Género
                                     <select
                                         className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         name="perfumegender"
                                         onChange={(e) => setPerfumeGender(e.target.value)} value={perfumeGender} required
                                     >
-                                        <option value="" disabled>Selecciona el genero</option>
+                                        <option value="" disabled>Género</option>
                                         <option value="Hombre">Hombre</option>
                                         <option value="Mujer">Mujer</option>
                                         <option value="Unisex">Unisex</option>
                                     </select>
                                 </label>
                             </div>
-                            <label className="flex flex-col gap-2 items-start w-full font-medium order-1 lg:order-none"> Marca
+                            <label className="flex flex-col gap-2 items-start w-full font-medium order-1 lg:order-none">Marca
                                 <select
                                     className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                     name="perfumebrand"
                                     onChange={(e) => setPerfumeBrand(e.target.value)}
                                     value={perfumeBrand} required
                                 >
-                                    <option value="" disabled>Selecciona una marca</option>
+                                    <option value="" disabled>Selecciona marca</option>
                                     <option value="Abercrombie & Fitch">Abercrombie & Fitch</option>
                                     <option value="Adolfo Dominguez">Adolfo Dominguez</option>
                                     <option value="Azzaro">Azzaro</option>
@@ -194,10 +193,10 @@ function PerfumeForm() {
                             <div className="flex w-full gap-2 sm:gap-5 order-3">
 
                                 <label className="flex flex-col gap-2 items-start w-full  font-medium"> Tamaño
-                                    <input className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal" type="number" name="perfumesize" placeholder="Tamaño de perfume" onChange={(e) => setPerfumeSize(e.target.value)} value={perfumeSize} min="0" max="500" required />
+                                    <input className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal" type="number" name="perfumesize" placeholder="Tamaño" onChange={(e) => setPerfumeSize(e.target.value)} value={perfumeSize} min="0" max="500" required />
                                 </label>
                                 <label className="flex flex-col gap-2 items-start w-full  font-medium"> Precio
-                                    <input className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal" type="number" name="perfumeprice" placeholder="Precio de perfume" onChange={(e) => setPerfumePrice(e.target.value)} value={perfumePrice} min="0" max="3000" required />
+                                    <input className="border border-gray-200 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal" type="number" name="perfumeprice" placeholder="Precio" onChange={(e) => setPerfumePrice(e.target.value)} value={perfumePrice} min="0" max="3000" required />
                                 </label>
                             </div>
 
@@ -228,7 +227,7 @@ function PerfumeForm() {
                                 {perfumeImage && (
                                     <img
                                         src={perfumeImage}
-                                        alt="Imagen del perfume"
+                                        alt={`Imagen principal de ${perfumeName}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -242,7 +241,7 @@ function PerfumeForm() {
                                         className="border border-gray-100 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         type="text"
                                         name="perfumeimage"
-                                        placeholder="Imagen principal de perfume"
+                                        placeholder="Segunda imagen"
                                         onChange={(e) => setPerfumeImageTwo(e.target.value)}
                                         value={perfumeImageTwo}
                                         required
@@ -252,7 +251,7 @@ function PerfumeForm() {
                                 {perfumeImageTwo && (
                                     <img
                                         src={perfumeImageTwo}
-                                        alt="Imagen del perfume"
+                                        alt={`Segunda imagen de ${perfumeName}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -263,7 +262,7 @@ function PerfumeForm() {
                                     <input
                                         className="border border-gray-100 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         type="text"Three                                      name="perfumeimage"
-                                        placeholder="Imagen principal de perfume"
+                                        placeholder="Tercera imagen"
                                         onChange={(e) => setPerfumeImageThree(e.target.value)}
                                         value={perfumeImageThree}
                                         required
@@ -273,7 +272,7 @@ function PerfumeForm() {
                                 {perfumeImageThree && (
                                     <img
                                         src={perfumeImageThree}
-                                        alt="Imagen del perfume"
+                                        alt={`Tercera imagen de ${perfumeName}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
@@ -285,7 +284,7 @@ function PerfumeForm() {
                                         className="border border-gray-100 p-2 rounded-lg w-full outline-none focus:border-green-600 font-normal"
                                         type="text"
                                         name="perfumeimage"
-                                        placeholder="Imagen principal de perfume"
+                                        placeholder="Cuarta imagen"
                                         onChange={(e) => setPerfumeImageFour(e.target.value)}
                                         value={perfumeImageFour}
                                         required
@@ -295,7 +294,7 @@ function PerfumeForm() {
                                 {perfumeImageFour && (
                                     <img
                                         src={perfumeImageFour}
-                                        alt="Imagen del perfume"
+                                        alt={`Cuarta imagen de ${perfumeName}`}
                                         className="w-full h-auto aspect-square object-cover rounded-lg"
                                     />
                                 )}
