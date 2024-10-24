@@ -50,6 +50,7 @@ function HomePage() {
                             <h2>{perfume.name}</h2>
                             <p>{perfume.description}</p>
                             <p>Version: {perfume.version}</p>
+                            <p>Marca: {perfume.brand}</p>
                             <p>Size: {perfume.size}</p>
                             <p>Price: {perfume.price}</p>
                             <img src={perfume.image} alt={perfume.name} />

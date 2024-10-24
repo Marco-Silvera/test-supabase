@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PerfumeForm from "../components/PerfumeForm";
 import PerfumeFormEdit from "../components/PerfumeFormEdit";
 import PerfumeList from "../components/PerfumeList";
+import PerfumeTable from "../components/PerfumeTable";
 
 function Dashboard() {
 
@@ -12,7 +13,7 @@ function Dashboard() {
     useEffect(() => {
         const checkUser = async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            
+
             if (!session) {
                 navigate('/login');
             }
@@ -22,14 +23,16 @@ function Dashboard() {
     }, [navigate]);
 
     return (
-        <section className="mx-auto w-full max-w-[1000px] py-20 px-5 flex flex-col gap-5">
-            <h1 className="text-3xl font-bold uppercase">Dashboard</h1>
+        <section className="mx-auto w-full max-w-[1500px] py-10 px-5 flex flex-col gap-5">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold uppercase">Dashboard</h2>
             <PerfumeForm />
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold uppercase">Edición</h2>
             <PerfumeFormEdit />
-            <button onClick={() => supabase.auth.signOut()}>
+            <button onClick={() => supabase.auth.signOut()} className="bg-red-500 rounded-lg w-fit py-2 px-5 self-center  font-bold hover:scale-95 uppercase transition-transform text-white shadow-sm hover:bg-white border hover:border-red-500 hover:text-red-500">
                 Logout
             </button>
-            <PerfumeList />
+            <PerfumeTable />
+            {/* <PerfumeList /> */}
         </section>
     );
 }

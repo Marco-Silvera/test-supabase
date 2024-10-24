@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { usePerfumes } from "../context/PerfumeContext";
-import PerfumeCard from "./PerfumeCard";
+import PerfumeCardDashboard from "./PerfumeCardDashboard";
 
 function PerfumeList() {
 
@@ -18,13 +18,13 @@ function PerfumeList() {
             return <p>No hay perfumes</p>
         } else {
             return (
-                <div>
+                <section>
                     {
                         perfumes.map(perfume => (
-                            <PerfumeCard perfume={perfume} />
+                            <PerfumeCardDashboard perfume={perfume} />
                         ))
                     }
-                </div>
+                </section>
             );
         }
     }

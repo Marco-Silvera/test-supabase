@@ -13,6 +13,7 @@ export const PerfumeContextProvider = ({ children }) => {
 
     const [perfumes, setPerfumes] = useState([])
     const [adding, setAdding] = useState(false)
+    const [addingUpdate, setAddingUpdate] = useState(false)
     const [loading, setLoading] = useState(false)
     const [perfumeToEdit, setPerfumeToEdit] = useState(null)
     const [selectedPerfume, setSelectedPerfume] = useState(null);
@@ -27,7 +28,7 @@ export const PerfumeContextProvider = ({ children }) => {
         setLoading(false)
     }
 
-    const createPerfume = async (perfumeName, perfumeDescription, perfumePath, perfumeVersion, perfumeSize, perfumePrice, perfumeImage,perfumeImageTwo,perfumeImageThree,perfumeImageFour) => {
+    const createPerfume = async (perfumeName, perfumeDescription, perfumePath, perfumeVersion, perfumeGender, perfumeBrand, perfumeConcentration, perfumeSize, perfumePrice, perfumeImage, perfumeImageTwo, perfumeImageThree, perfumeImageFour) => {
 
         setAdding(true)
         try {
@@ -36,6 +37,9 @@ export const PerfumeContextProvider = ({ children }) => {
                 description: perfumeDescription,
                 path: perfumePath,
                 version: perfumeVersion,
+                gender: perfumeGender,
+                brand: perfumeBrand,
+                concentration: perfumeConcentration,
                 size: perfumeSize,
                 price: perfumePrice,
                 image: perfumeImage,
@@ -67,7 +71,8 @@ export const PerfumeContextProvider = ({ children }) => {
     }
 
     const updatePerfume = async (updatedPerfume) => {
-        const { id, name, description, path, version, size, price, image, imagetwo, imagethree, imagefour } = updatedPerfume;
+        setAddingUpdate(true)
+        const { id, name, description, path, version, gender, brand,concentration, size, price, image, imagetwo, imagethree, imagefour } = updatedPerfume;
         console.log('Updating perfume with ID:', id);  // Para ver si el ID es correcto
         console.log('Updated perfume data:', updatedPerfume);
         const { data, error } = await supabase
@@ -77,6 +82,9 @@ export const PerfumeContextProvider = ({ children }) => {
                 description,
                 path,
                 version,
+                gender,
+                brand,
+                concentration,
                 size,
                 price,
                 image,
@@ -91,9 +99,12 @@ export const PerfumeContextProvider = ({ children }) => {
             console.log('Update successful:', data);  // Verificar si el update fue exitoso
             await getPerfumes();  // Refresca la lista de perfumes
         }
+
+        setAddingUpdate(false)
+
     }
 
-    return <PerfumeContext.Provider value={{ perfumes, getPerfumes, createPerfume, adding, loading, deletePerfume, displayPerfume, updatePerfume, perfumeToEdit, setSelectedPerfume, selectedPerfume }}>
+    return <PerfumeContext.Provider value={{ perfumes, getPerfumes, createPerfume, adding, addingUpdate, loading, deletePerfume, displayPerfume, updatePerfume, perfumeToEdit, setSelectedPerfume, selectedPerfume }}>
         {children}
     </PerfumeContext.Provider>
 }
