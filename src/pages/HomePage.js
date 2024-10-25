@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase/client';
+import Header from '../components/Header';
+import HeroHomePage from '../components/HeroHomePage';
 
 function HomePage() {
     const [perfumes, setPerfumes] = useState([]);
@@ -37,13 +39,14 @@ function HomePage() {
 
     // Si está cargando, mostramos un mensaje de carga
     if (loading) {
-        return <div>Loading perfumes...</div>;
+        return <div className='h-screen flex items-center justify-center font-light italic'>Cargando perfumes...</div>;
     }
 
     return (
-        <div>
-            <h1>Perfume List</h1>
-            <div>
+        <>
+            <Header />
+            <main className='mx-auto w-full max-w-[1500px] px-5 py-20'>
+            <HeroHomePage />
                 {perfumes.length > 0 ? (
                     perfumes.map((perfume) => (
                         <div key={perfume.id} className="perfume-item">
@@ -57,12 +60,10 @@ function HomePage() {
                         </div>
                     ))
                 ) : (
-                    <p>No perfumes available</p>
+                    <p>No hay perfumes disponibles</p>
                 )}
-            </div>
-            <a href='/login'>Login</a>
-            <button onClick={handleSignOut}>Sign Out</button>
-        </div>
+            </main>
+        </>
     );
 }
 
